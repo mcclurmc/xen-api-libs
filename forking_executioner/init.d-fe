@@ -19,6 +19,7 @@ DAEMON="/opt/xensource/libexec/fe"
 PID_FILE="/var/run/fe.pid"
 
 # lock file
+mkdir -p /var/lock/subsys
 SUBSYS_FILE="/var/lock/subsys/fe"
 
 # Source function library.
