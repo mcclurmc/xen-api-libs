@@ -33,3 +33,8 @@ RPCLIGHTFLAGS = -package type-conv -ppopt -I -ppopt ../rpc-light -ppopt pa_rpc.c
 DOCDIR = ../doc
 
 LIBEXEC = "/opt/xensource/libexec"
+
+HAVESPOT = $(shell ocaml -version | grep spotter | wc -l)
+ifeq ($(HAVESPOT), 1)
+     SPOT = *.sp?t
+endif
