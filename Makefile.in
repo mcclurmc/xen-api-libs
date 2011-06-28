@@ -7,6 +7,10 @@ HAVE_TYPECONV = @OCAML_PKG_type_conv@
 
 include config.mk
 
+STUBLIBDIR = $(DESTDIR)$(shell ocamlc -where)/stublibs
+$(STUBLIBDIR):
+	mkdir -p $@
+
 .PHONY: all
 all:
 ifeq ($(HAVE_TYPECONV),type-conv)
@@ -46,7 +50,7 @@ ifeq ($(HAVE_XEN),1)
 	$(MAKE) -C tapctl
 endif
 
-install:
+install: $(STUBLIBDIR)
 	$(MAKE) -C uuid install
 	$(MAKE) -C stdext install
 	$(MAKE) -C log install
@@ -73,7 +77,7 @@ endif
 	$(MAKE) -C forking_executioner install
 	$(MAKE) -C xen-utils install
 
-installxen:
+installxen: $(STUBLIBDIR)
 ifeq ($(HAVE_XEN),1)
 	$(MAKE) -C netdev install
 	$(MAKE) -C xsrpc install
@@ -125,7 +129,7 @@ bins:
 	$(MAKE) -C stdext bins
 	$(MAKE) -C close-and-exec bins
 
-bininstall:
+bininstall:	$(STUBLIBDIR)
 	$(MAKE) -C pciutil bininstall
 	$(MAKE) -C xml-light2 bininstall
 	$(MAKE) -C sexpr bininstall
