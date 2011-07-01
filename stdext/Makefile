@@ -60,10 +60,10 @@ base64pp: base64_main.ml all libstdext_stubs.a
 	$(OCAMLOPT) $(OCAMLOPTFLAGS) stdext.cmxa -linkpkg -o $@ $< -ccopt -L.
 
 fe_cli: fe_cli.ml all libstdext_stubs.a
-	$(OCAMLOPT) $(OCAMLOPTFLAGS) unix.cmxa ../uuid/uuid.cmxa ../rpc-light/rpc.cmx ../rpc-light/jsonrpc.cmx stdext.cmxa -linkpkg -o $@ $< -ccopt -L.
+	$(OCAMLOPT) $(OCAMLOPTFLAGS) unix.cmxa ../rpc-light/rpc.cmx ../rpc-light/jsonrpc.cmx stdext.cmxa -linkpkg -o $@ $< -ccopt -L.
 
 fe_test: fe_test.ml all libstdext_stubs.a
-	$(OCAMLOPT) $(OCAMLOPTFLAGS) unix.cmxa ../uuid/uuid.cmxa ../rpc-light/rpc.cmx ../rpc-light/jsonrpc.cmx stdext.cmxa -linkpkg -I ../uuid -o $@ $< -ccopt -L.
+	$(OCAMLOPT) $(OCAMLOPTFLAGS) unix.cmxa ../rpc-light/rpc.cmx ../rpc-light/jsonrpc.cmx stdext.cmxa -linkpkg -I -o $@ $< -ccopt -L.
 
 extentlistset_test: extentlistset_test.ml all libstdext_stubs.a
 	$(OCAMLOPT) $(OCAMLOPTFLAGS) unix.cmxa stdext.cmxa -linkpkg -o $@ $< -ccopt -L.
@@ -72,7 +72,7 @@ stdext.cmxa: libstdext_stubs.a $(foreach obj,$(STDEXT_OBJS),$(obj).cmx)
 	$(OCAMLOPT) $(OCAMLOPTFLAGS) -a -o $@ -cclib -lstdext_stubs $(foreach obj,$(STDEXT_OBJS),$(obj).cmx)
 
 stdext.cma: $(foreach obj,$(STDEXT_OBJS),$(obj).cmo)
-	$(OCAMLC) -a -dllib dllstdext_stubs.so -cclib -lstdext_stubs -o $@ $(foreach obj,$(STDEXT_OBJS),$(obj).cmo)
+	$(OCAMLC) $(OCAMLCFLAGS) -a -dllib dllstdext_stubs.so -cclib -lstdext_stubs -o $@ $(foreach obj,$(STDEXT_OBJS),$(obj).cmo)
 
 stdext_stubs.a: unixext_stubs.o zerocheck_stub.o 
 	ocamlmklib -o stdext_stubs $+
@@ -82,27 +82,27 @@ libstdext_stubs.a: unixext_stubs.o zerocheck_stub.o
 	ocamlmklib -o stdext_stubs $+
 
 querycd: querycd.cmo 
-	 ocamlfind ocamlc -custom -thread -package "threads,unix,stdext" querycd.cmo -o querycd -linkpkg -linkall
+	 ocamlfind ocamlc $(OCAMLCFLAGS) -custom -thread -package "threads,unix,stdext" querycd.cmo -o querycd -linkpkg -linkall
 #camlc unix.cma stdext.cma querycd.cmo -o querycd
 
 ## OBJS
 threadext.cmo: threadext.ml threadext.cmi
-	$(OCAMLC) -thread -c -o $@ $<
+	$(OCAMLC) $(OCAMLCFLAGS) -thread -c -o $@ $<
 
 fecomms.cmo : fecomms.ml
-	$(OCAMLC) -I ../rpc-light -c -o $@ $<
+	$(OCAMLC) $(OCAMLCFLAGS) -I ../rpc-light -c -o $@ $<
 
 fe.cmo: fe.ml 
 	$(OCAMLC) $(RPCLIGHTFLAGS) -I ../jsonrpc -I ../rpc-light -c -o $@ $<
 
 forkhelpers.cmo: forkhelpers.ml forkhelpers.cmi
-	$(OCAMLC) -thread -I ../uuid -c -o $@ $<
+	$(OCAMLC) $(OCAMLCFLAGS) -thread -c -o $@ $<
 
 filenameext.cmo: filenameext.ml filenameext.cmi
-	$(OCAMLC) -c -I ../uuid -o $@ $<
+	$(OCAMLC) $(OCAMLCFLAGS) -c -o $@ $<
 
 %.cmo: %.ml %.cmi
-	$(OCAMLC) -c -o $@ $<
+	$(OCAMLC) $(OCAMLCFLAGS) -c -o $@ $<
 
 threadext.cmi: threadext.mli
 	$(OCAMLC) -thread -c -o $@ $<
@@ -111,7 +111,7 @@ forkhelpers.cmi: forkhelpers.mli
 	$(OCAMLC) -thread -c -o $@ $<
 
 filenameext.cmi: filenameext.mli
-	$(OCAMLC) -c -I ../uuid -o $@ $<
+	$(OCAMLC) -c -o $@ $<
 
 fe.cmi: fe.cmo
 	$(OCAMLC) $(RPCLIGHTFLAGS) -c -o $@ $<
@@ -129,13 +129,13 @@ fecomms.cmx : fecomms.ml
 	$(OCAMLOPT) -I ../rpc-light -c -o $@ $<
 
 forkhelpers.cmx: forkhelpers.ml forkhelpers.cmi
-	$(OCAMLOPT) $(OCAMLOPTFLAGS) -I ../uuid -thread -c -o $@ $<
+	$(OCAMLOPT) $(OCAMLOPTFLAGS) -thread -c -o $@ $<
 
 filenameext.cmx: filenameext.ml filenameext.cmi
-	$(OCAMLOPT) $(OCAMLOPTFLAGS) -thread -c -I ../uuid -o $@ $<
+	$(OCAMLOPT) $(OCAMLOPTFLAGS) -thread -c -o $@ $<
 
 %.cmx: %.ml %.cmi
-	$(OCAMLOPT) $(OCAMLOPTFLAGS) -I ../uuid -c -o $@ $<
+	$(OCAMLOPT) $(OCAMLOPTFLAGS) -c -o $@ $<
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<

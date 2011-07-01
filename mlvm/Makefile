@@ -10,7 +10,7 @@ LIBS = lvm.cma lvm.cmxa
 default : $(LIBS)
 
 test_allocator: default
-	$(OCAMLOPT) -package kaputt -linkpkg -dtypes -g  -I ../stdext -I ../camldm -I ../uuid -I +kaputt unix.cmxa ../rpc-light/rpc.cmx ../rpc-light/jsonrpc.cmx ../camldm/camldm.cmxa ../uuid/uuid.cmxa ../stdext/stdext.cmxa ./lvm.cmxa test_allocator.ml -o $@
+	$(OCAMLOPT) -package kaputt -linkpkg -dtypes -g  -I ../stdext -I ../camldm -I +kaputt unix.cmxa ../rpc-light/rpc.cmx ../rpc-light/jsonrpc.cmx ../camldm/camldm.cmxa ../stdext/stdext.cmxa ./lvm.cmxa test_allocator.ml -o $@
 
 lvm.cmx: $(foreach obj,$(LIBOBJS),$(obj).cmx)
 	$(OCAMLOPT) -pack -g -o $@ $(foreach obj,$(LIBOBJS),$(obj).cmx)
@@ -38,7 +38,7 @@ uninstall:
 clean : 
 	rm -f *.cmo *.cmi *.cmx *.o *~ *.annot $(SPOT) lvmconfiglex.ml \
 	lvmconfigparser.mli lvmconfigparser.ml
-	rm -f test_allocator
+	rm -f test_allocator test_fragment
 
 .PHONY: doc
 doc: $(INTF)
@@ -62,19 +62,15 @@ lvmconfiglex.ml : lvmconfiglex.mll lvmconfigparser.mli
 .ml.cmx:
 	$(OCAMLOPT) $(COMPFLAG) -c $<
 
-.c.o:
-	$(OCAMLC) $(COMPFLAG) -c $<
-
-lvmcmd.cmo: messages.cmo 
-lvmcmd.cmx: messages.cmx 
-lv.cmo: absty.cmo 
-lv.cmx: absty.cmx 
-mlvm.cmo: vg.cmo pv.cmo messages.cmo lv.cmo 
-mlvm.cmx: vg.cmx pv.cmx messages.cmx lv.cmx 
-pv.cmo: utils.cmo lvmmarshal.cmo lvm_uuid.cmo crc.cmo constants.cmo \
-    allocator.cmo absty.cmo 
-pv.cmx: utils.cmx lvmmarshal.cmx lvm_uuid.cmx crc.cmx constants.cmx \
-    allocator.cmx absty.cmx 
-vg.cmo: debug.cmo pv.cmo lvm_uuid.cmo lv.cmo allocator.cmo absty.cmo 
-vg.cmx: debug.cmx pv.cmx lvm_uuid.cmx lv.cmx allocator.cmx absty.cmx 
-
+lvmcmd.cmo: messages.cmo
+lvmcmd.cmx: messages.cmx
+lv.cmo: absty.cmo
+lv.cmx: absty.cmx
+mlvm.cmo: vg.cmo pv.cmo messages.cmo lv.cmo
+mlvm.cmx: vg.cmx pv.cmx messages.cmx lv.cmx
+pv.cmo: utils.cmo lvmmarshal.cmo lvm_uuid.cmo crc.cmo constants.cmo allocator.cmo absty.cmo
+pv.cmx: utils.cmx lvmmarshal.cmx lvm_uuid.cmx crc.cmx constants.cmx allocator.cmx absty.cmx
+vg.cmo: debug.cmo pv.cmo lvm_uuid.cmo lv.cmo allocator.cmo absty.cmo
+vg.cmx: debug.cmx pv.cmx lvm_uuid.cmx lv.cmx allocator.cmx absty.cmx
+redo.cmo: debug.cmo allocator.cmo
+redo.cmx: debug.cmx allocator.cmx

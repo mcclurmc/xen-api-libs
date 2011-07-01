@@ -16,7 +16,6 @@ all:
 ifeq ($(HAVE_TYPECONV),type-conv)
 	$(MAKE) -C rpc-light
 endif
-	$(MAKE) -C uuid
 	$(MAKE) -C stdext
 	$(MAKE) -C log
 	$(MAKE) -C stunnel
@@ -51,7 +50,6 @@ ifeq ($(HAVE_XEN),1)
 endif
 
 install: $(STUBLIBDIR)
-	$(MAKE) -C uuid install
 	$(MAKE) -C stdext install
 	$(MAKE) -C log install
 	$(MAKE) -C stunnel install
@@ -87,7 +85,6 @@ ifeq ($(HAVE_XEN),1)
 endif
 
 uninstall:
-	$(MAKE) -C uuid uninstall
 	$(MAKE) -C stdext uninstall
 	$(MAKE) -C log uninstall
 	$(MAKE) -C stunnel uninstall
@@ -147,7 +144,6 @@ binuninstall:
 
 .PHONY: doc
 doc:
-	$(MAKE) -C uuid doc
 	$(MAKE) -C stdext doc
 	$(MAKE) -C sexpr doc
 	$(MAKE) -C udev doc
@@ -171,7 +167,6 @@ doc:
 
 .PHONY: clean
 clean:
-	$(MAKE) -C uuid clean
 	$(MAKE) -C camldm clean
 	$(MAKE) -C stdext clean
 	$(MAKE) -C log clean

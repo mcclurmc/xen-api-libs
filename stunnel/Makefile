@@ -1,13 +1,8 @@
 include ../config.mk
 
-
-
-
-
 OBJS = stunnel stunnel_cache
 INTF = $(foreach obj, $(OBJS),$(obj).cmi)
 LIBS = stunnel.cma stunnel.cmxa
-
 
 all: $(INTF) $(LIBS) $(PROGRAMS)
 
@@ -22,13 +17,13 @@ stunnel.cma: $(foreach obj,$(OBJS),$(obj).cmo)
 	$(OCAMLC) -a -o $@ $(foreach obj,$(OBJS),$(obj).cmo)
 
 %.cmo: %.ml
-	$(OCAMLC) -c -I ../stdext -I ../uuid -I ../log -o $@ $<
+	$(OCAMLC) $(OCAMLCFLAGS) -c -I ../stdext -I ../log -o $@ $<
 
 %.cmi: %.mli
-	$(OCAMLC) -c -I ../stdext -I ../uuid -o $@ $<
+	$(OCAMLC) $(OCAMLCFLAGS) -c -I ../stdext -o $@ $<
 
 %.cmx: %.ml
-	$(OCAMLOPT) $(OCAMLOPTFLAGS) -c -I ../stdext -I ../uuid -I ../log -o $@ $<
+	$(OCAMLOPT) $(OCAMLOPTFLAGS) -c -I ../stdext -I ../log -o $@ $<
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
