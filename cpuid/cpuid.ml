@@ -138,7 +138,7 @@ let is_maskable manufacturer family model stepping =
 
 let get_features_from_xen () =
 	let features = 
-	  try Xc.with_intf (fun xc -> Xc.get_boot_cpufeatures xc) 
+	  try failwith "Xc.with_intf (fun xc -> Xc.get_boot_cpufeatures xc)"
 	  with _ -> 0l, 0l, 0l, 0l, 0l, 0l, 0l, 0l 
 	in
 	match features with
