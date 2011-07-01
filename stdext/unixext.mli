@@ -137,3 +137,19 @@ val http_put: open_tcp:(server:string -> (in_channel * out_channel)) -> uri:stri
 
 external send_fd : Unix.file_descr -> string -> int -> int -> Unix.msg_flag list -> Unix.file_descr -> int = "stub_unix_send_fd_bytecode" "stub_unix_send_fd"
 external recv_fd : Unix.file_descr -> string -> int -> int -> Unix.msg_flag list -> int * Unix.sockaddr * Unix.file_descr = "stub_unix_recv_fd"
+
+type statvfs_t = {
+	f_bsize : int64;
+	f_frsize : int64;
+	f_blocks : int64;
+	f_bfree : int64;
+	f_bavail : int64;
+	f_files : int64;
+	f_ffree : int64;
+	f_favail : int64;
+	f_fsid : int64;
+	f_flag : int64;
+	f_namemax : int64;
+}
+
+val statvfs : string -> statvfs_t
