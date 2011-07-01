@@ -19,10 +19,10 @@ bins: $(PROGRAMS)
 libs: $(LIBS)
 
 vhd.cmxa: libvhd_stubs.a $(foreach obj,$(OBJS),$(obj).cmx)
-	$(OCAMLFIND) $(OCAMLOPT) $(OCAMLFLAGS) -a -o $@ -cclib -lvhd_stubs -cclib -lvhd $(foreach obj,$(OBJS),$(obj).cmx)
+	$(OCAMLFIND) $(OCAMLOPT) $(OCAMLFLAGS) -a -o $@ -cclib -lvhd_stubs -cclib -lvhd -cclib -luuid $(foreach obj,$(OBJS),$(obj).cmx)
 
 vhd.cma: $(foreach obj,$(OBJS),$(obj).cmo)
-	$(OCAMLFIND) $(OCAMLC) $(OCAMLFLAGS) -a -dllib dllvhd_stubs.so -cclib -lvhd_stubs -cclib -lvhd -o $@ $(foreach obj,$(OBJS),$(obj).cmo)
+	$(OCAMLFIND) $(OCAMLC) $(OCAMLFLAGS) -a -dllib dllvhd_stubs.so -cclib -lvhd_stubs -cclib -lvhd -cclib -luuid -o $@ $(foreach obj,$(OBJS),$(obj).cmo)
 
 vhd_stubs.a: vhd_stubs.o
 	ocamlmklib -o vhd_stubs -lvhd $+
