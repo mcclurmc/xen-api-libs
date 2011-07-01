@@ -34,7 +34,4 @@ DOCDIR = ../doc
 
 LIBEXEC = "/opt/xensource/libexec"
 
-HAVESPOT = $(shell ocaml -version | grep spotter | wc -l)
-ifeq ($(HAVESPOT), 1)
-     SPOT = *.sp?t
-endif
+SPOT=$(wildcard *.sp?t)
