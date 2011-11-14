@@ -1,11 +1,11 @@
---- a/config.mk.in
-+++ b/config.mk.in
+--- a/config.mk.in	2011-11-14 13:58:01.000000000 +0000
++++ b/config.mk.in	2011-11-14 13:58:21.000000000 +0000
 @@ -28,7 +28,7 @@
  OCAMLCFLAGS = -dtypes
  OCAMLOPTFLAGS = -g -dtypes
  
--RPCLIGHTFLAGS = -package camlp4,type-conv -ppopt -I -ppopt /usr/lib/ocaml/type-conv -ppopt /usr/lib/ocaml/type-conv/pa_type_conv.cmo  -ppopt -I -ppopt ../rpc-light -ppopt pa_rpc.cma -syntax camlp4o -I ../rpc-light -I ../jsonrpc -I ../rpc-light 
-+RPCLIGHTFLAGS = -package camlp4,type-conv -ppopt -I -ppopt ../rpc-light -ppopt pa_rpc.cma -syntax camlp4o -I ../rpc-light -I ../jsonrpc -I ../rpc-light 
+-RPCLIGHTFLAGS = -package camlp4,type-conv -ppopt -I -ppopt /usr/lib/ocaml/type-conv  -ppopt -I -ppopt ../rpc-light -ppopt pa_rpc.cma -syntax camlp4o -I ../rpc-light -I ../jsonrpc -I ../rpc-light 
++RPCLIGHTFLAGS = -package camlp4,type-conv -ppopt -I -ppopt ../rpc-light -ppopt pa_rpc.cma -syntax camlp4o -I ../rpc-light -I ../jsonrpc -I ../rpc-light
  
  DOCDIR = ../doc
  
