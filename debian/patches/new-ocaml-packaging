@@ -1,3 +1,4 @@
+Using Debian's versionned ocaml path in Makefile.in
 --- a/Makefile.in
 +++ b/Makefile.in
 @@ -8,6 +8,9 @@
