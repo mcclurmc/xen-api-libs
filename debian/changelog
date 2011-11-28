@@ -1,3 +1,9 @@
+xen-api-libs (0.5-5ubuntu1) oneiric; urgency=low
+
+  * Ubuntu Oneiric bump
+
+ -- Mike McClurg <mike.mcclurg@citrix.com>  Mon, 28 Nov 2011 15:30:46 +0000
+
 xen-api-libs (0.5-5) unstable; urgency=low
 
   * A bit more fixing of xcp-fe
