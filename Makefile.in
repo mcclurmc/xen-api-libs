@@ -18,8 +18,9 @@ ifeq ($(HAVE_TYPECONV),type-conv)
 endif
 	$(MAKE) -C uuid
 	$(MAKE) -C stdext
-	$(MAKE) -C xenctrlext
 	$(MAKE) -C log
+	$(MAKE) -C xenctrlext
+	$(MAKE) -C xenstoreext
 	$(MAKE) -C stunnel
 	$(MAKE) -C pciutil
 	$(MAKE) -C close-and-exec
@@ -40,6 +41,7 @@ ifeq ($(HAVE_DEVICE_MAPPER),1)
 endif
 	$(MAKE) -C forking_executioner
 	$(MAKE) -C xen-utils
+	$(MAKE) -C nbd
 
 ifeq ($(HAVE_XEN),1)
 	$(MAKE) -C netdev
@@ -51,7 +53,6 @@ endif
 	$(MAKE) -C xml-light2 bins
 	$(MAKE) -C sexpr bins
 	$(MAKE) -C stdext bins
-	$(MAKE) -C xenctrlext bins
 	$(MAKE) -C close-and-exec bins
 
 STUBLIBDIR = $(OCAMLDESTDIR)/stublibs
@@ -63,6 +64,7 @@ install: $(STUBLIBDIR)
 	$(MAKE) -C uuid install
 	$(MAKE) -C stdext install
 	$(MAKE) -C xenctrlext install
+	$(MAKE) -C xenstoreext install
 	$(MAKE) -C log install
 	$(MAKE) -C stunnel install
 	$(MAKE) -C pciutil install
@@ -86,6 +88,7 @@ ifeq ($(HAVE_DEVICE_MAPPER),1)
 endif
 	$(MAKE) -C forking_executioner install
 	$(MAKE) -C xen-utils install
+	$(MAKE) -C nbd install
 
 ifeq ($(HAVE_XEN),1)
 	$(MAKE) -C netdev install
@@ -97,7 +100,6 @@ endif
 	$(MAKE) -C xml-light2 bininstall
 	$(MAKE) -C sexpr bininstall
 	$(MAKE) -C stdext bininstall
-	$(MAKE) -C xenctrlext bininstall
 	$(MAKE) -C close-and-exec bininstall
 	$(MAKE) -C forking_executioner bininstall
 
@@ -106,6 +108,7 @@ uninstall:
 	$(MAKE) -C uuid uninstall
 	$(MAKE) -C stdext uninstall
 	$(MAKE) -C xenctrlext uninstall
+	$(MAKE) -C xenstoreext uninstall
 	$(MAKE) -C log uninstall
 	$(MAKE) -C stunnel uninstall
 	$(MAKE) -C pciutil uninstall
@@ -129,6 +132,7 @@ ifeq ($(HAVE_DEVICE_MAPPER),1)
 endif
 	$(MAKE) -C forking_executioner uninstall
 	$(MAKE) -C xen-utils uninstall
+	$(MAKE) -C nbd uninstall
 
 ifeq ($(HAVE_XEN),1)
 	$(MAKE) -C netdev uninstall
@@ -141,7 +145,6 @@ endif
 	$(MAKE) -C xml-light2 binuninstall
 	$(MAKE) -C sexpr binuninstall
 	$(MAKE) -C stdext binuninstall
-	$(MAKE) -C xenctrlext binuninstall
 	$(MAKE) -C close-and-exec binuninstall
 	$(MAKE) -C forking_executioner binuninstall
 
@@ -150,6 +153,7 @@ doc:
 	$(MAKE) -C uuid doc
 	$(MAKE) -C stdext doc
 	$(MAKE) -C xenctrlext doc
+	$(MAKE) -C xenstoreext doc
 	$(MAKE) -C sexpr doc
 	$(MAKE) -C udev doc
 	$(MAKE) -C log doc
@@ -168,6 +172,7 @@ doc:
 	$(MAKE) -C vhd doc
 	$(MAKE) -C tapctl doc
 	$(MAKE) -C xen-utils doc
+	$(MAKE) -C nbd doc
 
 .PHONY: test
 test:
@@ -179,6 +184,7 @@ clean:
 	$(MAKE) -C camldm clean
 	$(MAKE) -C stdext clean
 	$(MAKE) -C xenctrlext clean
+	$(MAKE) -C xenstoreext clean
 	$(MAKE) -C log clean
 	$(MAKE) -C stunnel clean
 	$(MAKE) -C pciutil clean
@@ -194,6 +200,7 @@ clean:
 	$(MAKE) -C forking_executioner clean
 	$(MAKE) -C mlvm clean
 	$(MAKE) -C xen-utils clean
+	$(MAKE) -C nbd clean
 	$(MAKE) -C netdev clean
 	$(MAKE) -C cpuid clean
 	$(MAKE) -C vhd clean
