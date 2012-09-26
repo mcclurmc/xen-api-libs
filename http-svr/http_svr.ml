@@ -177,7 +177,8 @@ let respond_to_options req s =
   in
   response_fct req ~hdrs:[
     "Access-Control-Allow-Origin", "*";
-    "Access-Control-Allow-Headers", access_control_allow_headers] s 0L (fun _ -> ())
+    "Access-Control-Allow-Headers", access_control_allow_headers;
+    "Access-Control-Allow-Methods","PUT"] s 0L (fun _ -> ())
       
 
 (** If no handler matches the request then call this callback *)
@@ -508,6 +509,28 @@ let bind ?(listen_backlog=128) sockaddr name =
     debug "Caught exception in Http_svr.bind (closing socket): %s" (Printexc.to_string e);
     Unix.close sock;
     raise e
+
+let bind_retry ?(listen_backlog=128) sockaddr =
+	let description = match sockaddr with
+		| Unix.ADDR_INET(ip, port) -> Printf.sprintf "INET %s:%d" (Unix.string_of_inet_addr ip) port
+		| Unix.ADDR_UNIX path -> Printf.sprintf "UNIX %s" path in
+	(* Sometimes we see failures which we hope are transient. If this
+	   happens then we'll retry a couple of times before failing. *)
+	let result = ref None in
+	let start = Unix.gettimeofday () in
+	let timeout = 30.0 in (* 30s *)
+	while !result = None && (Unix.gettimeofday () -. start < timeout) do
+		try
+			result := Some (bind ~listen_backlog sockaddr description);
+		with Unix.Unix_error(code, _, _) ->
+			debug "While binding %s: %s" description (Unix.error_message code);
+			Thread.delay 5.
+	done;
+	match !result with
+		| None -> failwith (Printf.sprintf "Repeatedly failed to bind: %s" description)
+		| Some s ->
+			info "Successfully bound socket to: %s" description;
+			s
 
 (* Maps sockets to Server_io.server records *)
 let socket_table = Hashtbl.create 10
