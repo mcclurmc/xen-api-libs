@@ -3,8 +3,8 @@ Date: Tue, 22 Nov 2011 00:30:34 +0000
 Subject: nice-path
 
 ---
- stdext/gzip.ml |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ stdext/gzip.ml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/stdext/gzip.ml b/stdext/gzip.ml
 index 805ae02..af070cc 100644
@@ -19,4 +19,3 @@ index 805ae02..af070cc 100644
    let nice_args=["-n";"19"] in (*lowest priority*)
    let extra_args=nice_args@[ionice]@ionice_args in
    let new_cmd=nice in
--- 

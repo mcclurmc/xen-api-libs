@@ -1,0 +1,93 @@
+From: Jon Ludlam <jonathan.ludlam@eu.citrix.com>
+Date: Tue, 22 Nov 2011 00:30:33 +0000
+Subject: type-conv-109.28.00
+
+---
+ config.mk.in       | 2 +-
+ configure.ac       | 2 +-
+ rpc-light/META.in  | 2 +-
+ rpc-light/Makefile | 8 ++++----
+ tapctl/Makefile    | 2 +-
+ 5 files changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/config.mk.in b/config.mk.in
+index eca1464..17404d0 100644
+--- a/config.mk.in
++++ b/config.mk.in
+@@ -27,7 +27,7 @@ OCAMLYACC = ocamlyacc
+ OCAMLCFLAGS = -dtypes
+ OCAMLOPTFLAGS = -g -dtypes
+ 
+-RPCLIGHTFLAGS = -package camlp4,type-conv -ppopt -I -ppopt /usr/lib/ocaml/type-conv  -ppopt -I -ppopt ../rpc-light -ppopt pa_rpc.cma -syntax camlp4o -I ../rpc-light -I ../jsonrpc -I ../rpc-light 
++RPCLIGHTFLAGS = -package camlp4,type_conv -ppopt -I -ppopt ../rpc-light -ppopt pa_rpc.cma -syntax camlp4o -I ../rpc-light -I ../jsonrpc -I ../rpc-light
+ 
+ DOCDIR = ../doc
+ 
+diff --git a/configure.ac b/configure.ac
+index 76170c4..688f7fc 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -52,7 +52,7 @@ if test "$OCAMLFIND" = "no"; then
+ fi
+ 
+ AC_CHECK_OCAML_PKG([xmlm])
+-AC_CHECK_OCAML_PKG([type-conv])
++AC_CHECK_OCAML_PKG([type_conv])
+ 
+ AC_CONFIG_FILES([Makefile config.mk])
+ AC_SUBST([XEN])
+diff --git a/rpc-light/META.in b/rpc-light/META.in
+index ccf738a..d1e2a2e 100644
+--- a/rpc-light/META.in
++++ b/rpc-light/META.in
+@@ -5,7 +5,7 @@ requires = "rpc-light.xml, rpc-light.json"
+ package "syntax" (
+   version = "@VERSION@"
+   description = "rpc-light: library to marshalling/unmarshalling ML types to/from RPC intermediate language"
+-  requires = "type-conv.syntax"
++  requires = "type_conv"
+   archive(syntax,preprocessor) = "pa_rpc.cma"
+   archive(syntax,toploop) = "pa_rpc.cma"
+   )
+diff --git a/rpc-light/Makefile b/rpc-light/Makefile
+index a4941d3..8b7b216 100644
+--- a/rpc-light/Makefile
++++ b/rpc-light/Makefile
+@@ -3,7 +3,7 @@ include ../config.mk
+ OCAMLFLAGS = -annot -g
+ PACKS = xmlm
+ 
+-ICAMLP4 = -I $(shell ocamlfind query camlp4) -I $(shell ocamlfind query type-conv)
++ICAMLP4 = -I $(shell ocamlfind query camlp4) -I $(shell ocamlfind query type_conv)
+ TARGETS = \
+ 	rpc.cmi rpc.cmo rpc.o rpc.cmx \
+ 	pa_rpc.cma idl.cma \
+@@ -23,13 +23,13 @@ idl.cma: p4_rpc.cmo p4_idl.cmo
+ 	$(OCAMLC) -a $(ICAMLP4) -o $@ $^
+ 
+ pa_rpc.cmo: pa_rpc.ml p4_rpc.cmo pa_module_conv.cmo
+-	$(OCAMLC) $(OCAMLFLAGS) -c -package camlp4,type-conv -pp "camlp4orf" $(ICAMLP4) $@ $<
++	$(OCAMLC) $(OCAMLFLAGS) -c -package camlp4,type_conv -pp "camlp4orf" $(ICAMLP4) $@ $<
+ 
+ p4_rpc.cmo: p4_rpc.ml rpc.cmo
+-	$(OCAMLC) $(OCAMLFLAGS) -c -package camlp4,type-conv -pp "camlp4orf" $(ICAMLP4) $@ $<
++	$(OCAMLC) $(OCAMLFLAGS) -c -package camlp4,type_conv -pp "camlp4orf" $(ICAMLP4) $@ $<
+ 
+ p4_idl.cmo: p4_idl.ml p4_rpc.cmo
+-	$(OCAMLC) $(OCAMLFLAGS) -c -package camlp4,type-conv -pp "camlp4orf" $(ICAMLP4) $@ $<
++	$(OCAMLC) $(OCAMLFLAGS) -c -package camlp4,type_conv -pp "camlp4orf" $(ICAMLP4) $@ $<
+ 
+ %.o %.cmx: %.ml
+ 	$(OCAMLOPT) $(OCAMLFLAGS) -package $(PACKS) -c -o $@ $<
+diff --git a/tapctl/Makefile b/tapctl/Makefile
+index 8b0f36b..205a856 100644
+--- a/tapctl/Makefile
++++ b/tapctl/Makefile
+@@ -1,6 +1,6 @@
+ include ../config.mk
+ 
+-#FEPP = camlp4o -I ../rpc-light -I $(shell ocamlfind query type-conv) pa_type_conv.cmo pa_rpc.cma
++#FEPP = camlp4o -I ../rpc-light -I $(shell ocamlfind query type_conv) pa_type_conv.cmo pa_rpc.cma
+ 
+ OBJS = tapctl
+ INTF = $(foreach obj, $(OBJS),$(obj).cmi)

@@ -3,8 +3,8 @@ Date: Tue, 22 Nov 2011 00:30:34 +0000
 Subject: fe-init-script
 
 ---
- forking_executioner/Makefile  |    7 +-
- forking_executioner/init.d-fe |  220 ++++++++++++++++++++++++++---------------
+ forking_executioner/Makefile  |   7 +-
+ forking_executioner/init.d-fe | 220 ++++++++++++++++++++++++++----------------
  2 files changed, 142 insertions(+), 85 deletions(-)
 
 diff --git a/forking_executioner/Makefile b/forking_executioner/Makefile
@@ -275,4 +275,3 @@ index 3dd813e..40e3ab9 100644
  esac
 +
 +:
--- 

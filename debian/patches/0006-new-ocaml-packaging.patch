@@ -3,8 +3,8 @@ Date: Tue, 22 Nov 2011 00:30:34 +0000
 Subject: new-ocaml-packaging
 
 ---
- Makefile.in |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+ Makefile.in | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/Makefile.in b/Makefile.in
 index bf59865..236e94d 100644
@@ -20,4 +20,3 @@ index bf59865..236e94d 100644
  .PHONY: default
  default: all 
  	@:
--- 

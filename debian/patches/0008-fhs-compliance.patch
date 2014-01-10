@@ -3,22 +3,22 @@ Date: Thu, 8 Dec 2011 11:06:19 +0000
 Subject: fhs-compliance
 
 ---
- config.mk.in                       |    2 +-
- forking_executioner/child.ml       |    2 +-
- forking_executioner/fe_main.ml     |    4 ++--
- forking_executioner/test_forker.ml |    2 +-
- http-svr/http_test.ml              |    4 ++--
- netdev/netdev.ml                   |    2 +-
- stdext/forkhelpers.ml              |    2 +-
- stunnel/stunnel.ml                 |    2 +-
- xen-utils/xen_cmdline.ml           |    2 +-
+ config.mk.in                       | 2 +-
+ forking_executioner/child.ml       | 2 +-
+ forking_executioner/fe_main.ml     | 4 ++--
+ forking_executioner/test_forker.ml | 2 +-
+ http-svr/http_test.ml              | 4 ++--
+ netdev/netdev.ml                   | 2 +-
+ stdext/forkhelpers.ml              | 2 +-
+ stunnel/stunnel.ml                 | 2 +-
+ xen-utils/xen_cmdline.ml           | 2 +-
  9 files changed, 11 insertions(+), 11 deletions(-)
 
 diff --git a/config.mk.in b/config.mk.in
-index eaf8a35..1d08ba5 100644
+index 17404d0..654568c 100644
 --- a/config.mk.in
 +++ b/config.mk.in
-@@ -31,7 +31,7 @@ RPCLIGHTFLAGS = -package camlp4,type-conv -ppopt -I -ppopt ../rpc-light -ppopt p
+@@ -31,7 +31,7 @@ RPCLIGHTFLAGS = -package camlp4,type_conv -ppopt -I -ppopt ../rpc-light -ppopt p
  
  DOCDIR = ../doc
  
@@ -142,4 +142,3 @@ index 1edefa1..038b6fc 100644
  
  let call_script args = 
  	try
--- 

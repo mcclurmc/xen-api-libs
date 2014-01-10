@@ -8,8 +8,8 @@ Date:   Fri Jul 1 11:58:53 2011 +0100
 
     Remove call to get boot cpuid - it's not in OSS Xen
 ---
- cpuid/cpuid.ml |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ cpuid/cpuid.ml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/cpuid/cpuid.ml b/cpuid/cpuid.ml
 index 1227112..c50ed2e 100644
@@ -24,4 +24,3 @@ index 1227112..c50ed2e 100644
  	  with _ -> 0l, 0l, 0l, 0l, 0l, 0l, 0l, 0l 
  	in
  	match features with
--- 

@@ -8,8 +8,8 @@ Date:   Fri Jul 1 14:55:13 2011 +0100
 
     Fix build of vhd ocaml library
 ---
- vhd/Makefile    |    6 +++---
- vhd/vhd_stubs.c |    2 ++
+ vhd/Makefile    | 6 +++---
+ vhd/vhd_stubs.c | 2 ++
  2 files changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/vhd/Makefile b/vhd/Makefile
@@ -48,4 +48,3 @@ index c83bd1a..17edeb2 100644
  #include <errno.h>
  #include <fcntl.h>
  #include <stdio.h>
--- 
