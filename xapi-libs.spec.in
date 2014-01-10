@@ -1,0 +1,92 @@
+# -*- rpm-spec -*-
+
+Summary: xapi-libs - xen toolstack for XCP libraries
+Name:    xapi-libs
+Version: 0.1
+Release: @RPM_RELEASE@
+Group:   System/Hypervisor
+License: LGPL+linking exception
+URL:  http://www.xen.org
+Source0: xapi-libs-%{version}.tar.bz2
+BuildRoot: %{_tmppath}/%{name}-%{version}-root
+BuildRequires: ocaml, ocaml-findlib, ocaml-camlp4, ocaml-type-conv, ocaml-getopt, ocaml-xmlm, ocaml-xmlm-devel, autoconf, automake, xen-devel, blktap-devel, e2fsprogs-devel
+
+%description
+The xapi toolstack development libraries and tools.
+
+%package utils
+Summary: Some utilities associated with the xapi toolstack
+Group: System/Hypervisor
+
+%description utils
+Some miscellaneous utilities
+
+%package devel
+Summary: The xapi toolstack development libraries
+Group: System/Hypervisor
+
+%description devel
+This package contains core development libraries required for building xapi.
+
+%package fe
+Summary: The fork-and-exec daemon
+Group: System/Hypervisor
+
+%description fe
+This package contains the fork-and-exec daemon, required by xapi at runtime.
+
+%prep 
+%setup -q
+%build
+sh autogen.sh
+./configure
+%{__make} 
+%{__make} test
+
+%install
+rm -rf %{buildroot}
+
+DESTDIR=$RPM_BUILD_ROOT %{__make} install
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%post fe
+[ ! -x /sbin/chkconfig ] || chkconfig fe on
+
+
+%files fe
+%defattr(-,root,root,-)
+/opt/xensource/libexec/fe
+/etc/rc.d/init.d/fe
+/opt/xensource/libexec/fe_cli
+/opt/xensource/libexec/fe_test
+
+%files utils
+%defattr(-,root,root,-)
+   /opt/xensource/libexec/base64pp
+   /opt/xensource/libexec/closeandexec
+   /opt/xensource/libexec/pciutil
+   /opt/xensource/libexec/sexprpp
+   /opt/xensource/libexec/xmlpp
+   /opt/xensource/libexec/extentlistset_test
+
+%files devel
+%defattr(-,root,root,-)
+/usr/lib/ocaml/*/META
+/usr/lib/ocaml/*/*.cm[i|o|a|x]
+/usr/lib/ocaml/*/*.cmxa
+/usr/lib/ocaml/*/*.[o|a]
+/usr/lib/ocaml/*/*.so
+/usr/lib/ocaml/*/*.so.owner
+
+%exclude /usr/lib/ocaml/close-and-exec/closeandexec_main.cmx
+%exclude /usr/lib/ocaml/pciutil/pciutil_main.cmx
+%exclude /usr/lib/ocaml/sexpr/sexprpp.cmx
+%exclude /usr/lib/ocaml/stdext/base64_main.cmx
+%exclude /usr/lib/ocaml/stdext/fe_cli.cmx
+%exclude /usr/lib/ocaml/stdext/fe_test.cmx
+%exclude /usr/lib/ocaml/xml-light2/xmlpp.cmx
+%exclude /usr/lib/ocaml/*/*.sp?t
+
+%changelog
