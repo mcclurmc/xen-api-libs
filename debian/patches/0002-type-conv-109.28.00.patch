@@ -3,13 +3,27 @@ Date: Tue, 22 Nov 2011 00:30:33 +0000
 Subject: type-conv-109.28.00
 
 ---
+ Makefile.in        | 2 +-
  config.mk.in       | 2 +-
  configure.ac       | 2 +-
  rpc-light/META.in  | 2 +-
  rpc-light/Makefile | 8 ++++----
  tapctl/Makefile    | 2 +-
- 5 files changed, 8 insertions(+), 8 deletions(-)
+ 6 files changed, 9 insertions(+), 9 deletions(-)
 
+diff --git a/Makefile.in b/Makefile.in
+index bf59865..21d594e 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -13,7 +13,7 @@ default: all
+ 
+ .PHONY: all
+ all:
+-ifeq ($(HAVE_TYPECONV),type-conv)
++ifeq ($(HAVE_TYPECONV),type_conv)
+ 	$(MAKE) -C rpc-light
+ endif
+ 	$(MAKE) -C uuid
 diff --git a/config.mk.in b/config.mk.in
 index eca1464..17404d0 100644
 --- a/config.mk.in
